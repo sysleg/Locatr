@@ -7,9 +7,10 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,7 +36,11 @@ public class LocatrFragment extends Fragment {
     private static final String TAG = "LocatrFragment";
     private ImageView mImageView;
     private GoogleApiClient mClient;
-    public static final int MY_PERMISSIONS_REQUEST = 1;
+    public static final int PERMISSIONS_REQUEST = 0;
+    private static final String[] LOCATION_PERMISSIONS = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+    };
 
     public static LocatrFragment newInstance() {
         return new LocatrFragment();
@@ -80,9 +85,13 @@ public class LocatrFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_locate:
-                findImage();
+                if(hasLocationPermission()){
+                    findImage();
+                } else {
+                    requestPermissions(LOCATION_PERMISSIONS, PERMISSIONS_REQUEST);
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -107,30 +116,43 @@ public class LocatrFragment extends Fragment {
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         request.setNumUpdates(1);
         request.setInterval(0);
-        if (ActivityCompat.checkSelfPermission(getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getContext(),
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),Manifest.permission.ACCESS_FINE_LOCATION)
-                    && ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),Manifest.permission.ACCESS_COARSE_LOCATION))   {
 
-            }else{
-                ActivityCompat.requestPermissions(getActivity(),new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION}
-                        ,MY_PERMISSIONS_REQUEST);
+        try {
+            LocationServices.FusedLocationApi
+                    .requestLocationUpdates(mClient, request, new LocationListener() {
+                        @Override
+                        public void onLocationChanged(Location location) {
+                            Log.i(TAG, "Got a fix: " + location);
+                               new SearchTask().execute(location);
+                        }
+                    });
+            }catch (SecurityException e) {
+                requestPermissions(LOCATION_PERMISSIONS, PERMISSIONS_REQUEST);
             }
-            return;
-        }
-        LocationServices.FusedLocationApi
-                .requestLocationUpdates(mClient, request, new LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        Log.i(TAG, "Got a fix: " + location);
-                        new SearchTask().execute(location);
-                    }
-                });
     }
+
+    private boolean hasLocationPermission() {
+        int result = ContextCompat
+                .checkSelfPermission(getActivity(),
+                        LOCATION_PERMISSIONS[0]);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case PERMISSIONS_REQUEST:
+                if(hasLocationPermission()){
+                    findImage();
+                }
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+
+
+    }
+
     private class SearchTask extends AsyncTask<Location,Void,Void>{
         private GalleryItem mGalleryItem;
         private Bitmap mBitmap;
