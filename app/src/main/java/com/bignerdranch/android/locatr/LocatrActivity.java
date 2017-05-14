@@ -1,5 +1,6 @@
 package com.bignerdranch.android.locatr;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class LocatrActivity extends SingleFragmentActivity{
     private static final int REQUEST_ERROR = 0;
-
 
     @Override
     protected Fragment createFragment() {

@@ -30,21 +30,30 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Android_Porjects\Locatr\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="2ec43abec4c67c011fa6f82022d56fb0434fddac">
-        <dex dex="C:\Android_Porjects\Locatr\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_48441e459abc67127497dea53d250fbf1d5e212d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Android_Porjects\Locatr\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
         <dex dex="C:\Android_Porjects\Locatr\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_c6729b0bfc646b15d90f122071fb4bc0bd19d654\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry\.android\build-cache\1c09ca387793ef477c4bfc259386fb42ce6d2b9f\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6d0d5e86f5b7203834df01ed78ebfdd5cbf74d48">
+        <dex dex="C:\Android_Porjects\Locatr\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_05ddb963f1e3f5a2f6b1e427a11da54cf94e9b96\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Android_Porjects\Locatr\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="90412ef65e80f6ffcf3f11f07649fe322a036128">
+        <dex dex="C:\Android_Porjects\Locatr\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_48441e459abc67127497dea53d250fbf1d5e212d\classes.dex" />
     </item>
     <item
         is-multidex="true"
